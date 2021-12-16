@@ -1,3 +1,4 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native-elements";
@@ -5,8 +6,18 @@ import { Button } from "react-native-elements/dist/buttons/Button";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Icon from "react-native-vector-icons/FontAwesome";
+import { RootStackParamList, RootScreens } from "../constants/screenNames/Root";
 
-const WelcomeScreen = () => {
+// interface WelcomeProps {
+// 	navigation: NavigationType
+// };
+
+type WelcomeProps = NativeStackScreenProps<
+  RootStackParamList,
+  "Welcome" //todo: figure out a way to use RootScreens.WELCOME_SCREEN
+>;
+
+const WelcomeScreen = (props: WelcomeProps) => {
   return (
     <SafeAreaView style={styles.containerStyle}>
       <Text h4 style={styles.titleText}>
@@ -20,7 +31,7 @@ const WelcomeScreen = () => {
           ...styles.buttonContainer,
           ...styles.loginContainer,
         }}
-        onPress={() => console.log("Login")}
+        onPress={() => props.navigation.navigate("Login")}
       />
 
       <Button
@@ -30,7 +41,7 @@ const WelcomeScreen = () => {
           ...styles.buttonContainer,
           ...styles.registerContainer,
         }}
-        onPress={() => console.log("Register")}
+        onPress={() => props.navigation.navigate("Register")}
       />
     </SafeAreaView>
   );

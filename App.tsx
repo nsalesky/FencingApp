@@ -1,13 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import WelcomeScreen from "./src/screens/Welcome";
-import ScreenNames from "./src/constants/ScreenNames";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { RootScreens } from "./src/constants/screenNames/Root";
+import LoginScreen from "./src/screens/Authentication/Login/Login";
+import RegistrationScreen from "./src/screens/Authentication/Registration/Registration";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,14 +16,18 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={ScreenNames.WELCOME_SCREEN}
+          initialRouteName={RootScreens.WELCOME}
           screenOptions={{
             headerShown: false,
           }}
         >
+          <Stack.Screen name={RootScreens.WELCOME} component={WelcomeScreen} />
+
+          <Stack.Screen name={RootScreens.LOGIN} component={LoginScreen} />
+
           <Stack.Screen
-            name={ScreenNames.WELCOME_SCREEN}
-            component={WelcomeScreen}
+            name={RootScreens.REGISTER}
+            component={RegistrationScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
