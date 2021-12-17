@@ -8,8 +8,11 @@ import WelcomeScreen from "./src/screens/Welcome";
 import { RootScreens } from "./src/constants/screenNames/Root";
 import LoginScreen from "./src/screens/Authentication/Login/Login";
 import RegistrationScreen from "./src/screens/Authentication/Registration/Registration";
+import initializeFirebase from "./src/firebase/firebase";
 
 const Stack = createNativeStackNavigator();
+
+initializeFirebase();
 
 export default function App() {
   return (
