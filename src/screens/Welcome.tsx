@@ -8,10 +8,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackParamList, RootScreens } from "../constants/screenNames/Root";
 
-// interface WelcomeProps {
-// 	navigation: NavigationType
-// };
-
 type WelcomeProps = NativeStackScreenProps<
   RootStackParamList,
   "Welcome" //todo: figure out a way to use RootScreens.WELCOME_SCREEN

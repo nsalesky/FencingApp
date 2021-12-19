@@ -1,18 +1,23 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Text } from "react-native-elements";
-import { Button } from "react-native-elements/dist/buttons/Button";
-import { Input } from "react-native-elements/dist/input/Input";
+import { Text, Input, Button } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../../constants/screenNames/Root";
 
 // const isEmailValid = (email: string): boolean => {
 //   var re = /\S+@\S+\.\S+/;
 //   return re.test(email);
 // };
 
-const LoginScreen = (props: any) => {
+type LoginProps = NativeStackScreenProps<
+  RootStackParamList,
+  "Login" //todo: figure out a way to use RootScreens.LOGIN_SCREEN
+>;
+
+const LoginScreen = (props: LoginProps) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 

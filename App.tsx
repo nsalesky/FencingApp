@@ -9,6 +9,7 @@ import { RootScreens } from "./src/constants/screenNames/Root";
 import LoginScreen from "./src/screens/Authentication/Login/Login";
 import RegistrationScreen from "./src/screens/Authentication/Registration/Registration";
 import initializeFirebase from "./src/firebase/firebase";
+import AccountCreationScreen from "./src/screens/Authentication/Registration/AccountCreation";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,11 @@ export default function App() {
           <Stack.Screen
             name={RootScreens.REGISTER}
             component={RegistrationScreen}
+          />
+
+          <Stack.Screen
+            name={RootScreens.ACCOUNT_CREATION}
+            component={AccountCreationScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
