@@ -3,7 +3,6 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import dotenv from "dotenv";
 
 import WelcomeScreen from "./src/screens/Welcome";
 import { RootScreens } from "./src/constants/screenNames/Root";
@@ -15,7 +14,6 @@ import AccountCreationScreen from "./src/screens/Authentication/Registration/Acc
 const Stack = createNativeStackNavigator();
 
 // Basic initializations
-dotenv.config();
 initializeFirebase();
 
 /**
