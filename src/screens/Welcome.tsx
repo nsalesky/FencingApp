@@ -8,11 +8,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackParamList, RootScreens } from "../constants/screenNames/Root";
 
+/**
+ * The props expected for the welcome screen.
+ */
 type WelcomeProps = NativeStackScreenProps<
   RootStackParamList,
   "Welcome" //todo: figure out a way to use RootScreens.WELCOME_SCREEN
 >;
 
+/**
+ * The welcome screen which allows users to login to a pre-existing account, or create a new account.
+ * @param props the welcome screen props.
+ * @returns the rendered welcome screen.
+ */
 const WelcomeScreen = (props: WelcomeProps) => {
   return (
     <SafeAreaView style={styles.containerStyle}>
@@ -43,6 +51,7 @@ const WelcomeScreen = (props: WelcomeProps) => {
   );
 };
 
+// The welcome screen style
 const styles = StyleSheet.create({
   containerStyle: {
     display: "flex",

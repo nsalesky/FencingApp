@@ -15,6 +15,10 @@ const Stack = createNativeStackNavigator();
 
 initializeFirebase();
 
+/**
+ * The overall app.
+ * @returns the rendered app
+ */
 export default function App() {
   return (
     <SafeAreaProvider>
