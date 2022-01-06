@@ -12,7 +12,7 @@ type RootStackParamList = {
   Register: undefined;
   AccountCreation: {
     fullName: string;
-    displayName: string;
+    prefName: string;
   };
   Login: undefined;
 };

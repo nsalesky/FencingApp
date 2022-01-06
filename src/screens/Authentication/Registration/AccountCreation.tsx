@@ -6,6 +6,8 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../constants/screenNames/Root";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import context from "../../../context/context";
+import { gql } from "@apollo/client";
 
 /**
  * The props expected for the account creation screen.
@@ -49,6 +51,12 @@ const containsNumber = (text: string): boolean => {
   return false;
 };
 
+const CREATE_USER = gql`
+  mutation CreateUser(user: {
+    createUser
+  }
+`;
+
 /**
  * The account creation screen which allows users to set up their login information with an email and password combo.
  * @param props the full name and preferred name that the user previously determined
@@ -57,6 +65,7 @@ const containsNumber = (text: string): boolean => {
 const AccountCreationScreen = (props: AccountCreationProps) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const globalState = React.useContext(context);
 
   const isEmailValid = (): boolean => {
     let re = /\S+@\S+\.\S+/;
@@ -82,6 +91,9 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("Created account successfully");
+
+        // Set the global email context
+        globalState.setEmail(email);
 
         // TODO: create user account with the fullName and displayName provided in the backend
       })

@@ -24,12 +24,12 @@ type RegistrationProps = NativeStackScreenProps<
  */
 const RegistrationScreen = (props: RegistrationProps) => {
   const [fullName, setFullName] = React.useState("");
-  const [displayName, setDisplayName] = React.useState("");
+  const [prefName, setPrefName] = React.useState("");
 
   const next = () => {
     props.navigation.navigate("AccountCreation", {
       fullName,
-      displayName,
+      prefName,
     });
   };
 
@@ -57,21 +57,19 @@ const RegistrationScreen = (props: RegistrationProps) => {
 
       <Input
         placeholder="Preferred Display Name"
-        value={displayName}
-        onChangeText={setDisplayName}
+        value={prefName}
+        onChangeText={setPrefName}
         leftIcon={<Icon name="user" size={24} color="black" />}
         containerStyle={styles.inputContainer}
       />
 
       <Text style={styles.subtext}>
         (e.g.,{" "}
-        <Text style={{ ...styles.subtext, fontStyle: "italic" }}>
-          Bob Jones, Liz Johnson
-        </Text>
+        <Text style={{ ...styles.subtext, fontStyle: "italic" }}>Bob, Liz</Text>
         )
       </Text>
 
-      {fullName.length > 0 && displayName.length > 0 ? (
+      {fullName.length > 0 && prefName.length > 0 ? (
         <Button
           title="Next"
           containerStyle={{ ...styles.button, ...styles.readyButton }}

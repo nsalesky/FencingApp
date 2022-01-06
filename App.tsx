@@ -10,6 +10,7 @@ import LoginScreen from "./src/screens/Authentication/Login/Login";
 import RegistrationScreen from "./src/screens/Authentication/Registration/Registration";
 import initializeFirebase from "./src/firebase/firebase";
 import AccountCreationScreen from "./src/screens/Authentication/Registration/AccountCreation";
+import GlobalState from "./src/context/GlobalState";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,30 +23,35 @@ initializeFirebase();
  */
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={RootScreens.WELCOME}
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name={RootScreens.WELCOME} component={WelcomeScreen} />
+    <GlobalState>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={RootScreens.WELCOME}
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen
+              name={RootScreens.WELCOME}
+              component={WelcomeScreen}
+            />
 
-          <Stack.Screen name={RootScreens.LOGIN} component={LoginScreen} />
+            <Stack.Screen name={RootScreens.LOGIN} component={LoginScreen} />
 
-          <Stack.Screen
-            name={RootScreens.REGISTER}
-            component={RegistrationScreen}
-          />
+            <Stack.Screen
+              name={RootScreens.REGISTER}
+              component={RegistrationScreen}
+            />
 
-          <Stack.Screen
-            name={RootScreens.ACCOUNT_CREATION}
-            component={AccountCreationScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+            <Stack.Screen
+              name={RootScreens.ACCOUNT_CREATION}
+              component={AccountCreationScreen}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </GlobalState>
   );
 }
 
