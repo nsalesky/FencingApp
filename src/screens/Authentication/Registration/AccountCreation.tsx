@@ -70,7 +70,7 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
     }
 
     // Check for special characters and numbers
-    return containsSpecialCharacter(email) && containsNumber(email);
+    return containsSpecialCharacter(password) && containsNumber(password);
   };
 
   /**

@@ -1,6 +1,5 @@
 import { getApps, initializeApp } from "firebase/app";
 import "firebase/auth";
-import config from "../config";
 import {
   FIREBASE_API_KEY,
   FIREBASE_AUTH_DOMAIN,
