@@ -7,11 +7,19 @@ import { RootStackParamList } from "../../../constants/screenNames/Root";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
+/**
+ * The props expected for the account creation screen.
+ */
 type AccountCreationProps = NativeStackScreenProps<
   RootStackParamList,
   "AccountCreation" //todo: figure out a way to use RootScreens.WELCOME_SCREEN
 >;
 
+/**
+ * Does the given body of text contain at least one special character?
+ * @param text the body of text to analyze
+ * @returns whether or not that `text` contains a special character
+ */
 const containsSpecialCharacter = (text: string): boolean => {
   const specialCharacters = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
@@ -24,6 +32,11 @@ const containsSpecialCharacter = (text: string): boolean => {
   return false;
 };
 
+/**
+ * Does the given body of text contain at least one number?
+ * @param text the body of text to analyze
+ * @returns whether or not that `text` contains a number
+ */
 const containsNumber = (text: string): boolean => {
   const numbers = "1234567890";
 
@@ -36,6 +49,11 @@ const containsNumber = (text: string): boolean => {
   return false;
 };
 
+/**
+ * The account creation screen which allows users to set up their login information with an email and password combo.
+ * @param props the full name and preferred name that the user previously determined
+ * @returns the rendered account creation screen
+ */
 const AccountCreationScreen = (props: AccountCreationProps) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -55,6 +73,9 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
     return containsSpecialCharacter(email) && containsNumber(email);
   };
 
+  /**
+   * Creates the user's login account on Firebase and redirects the user to the home screen if successful.
+   */
   const next = () => {
     const auth = getAuth();
 
@@ -64,7 +85,7 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
 
         // TODO: create user account with the fullName and displayName provided in the backend
       })
-      .catch((error) => {
+      .catch((error: any) => {
         Alert.alert("Error creating account: " + error.message);
       });
   };
@@ -128,6 +149,7 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
   );
 };
 
+// The account creation style
 const styles = StyleSheet.create({
   container: {
     display: "flex",

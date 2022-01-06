@@ -7,16 +7,19 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../constants/screenNames/Root";
 
-// const isEmailValid = (email: string): boolean => {
-//   var re = /\S+@\S+\.\S+/;
-//   return re.test(email);
-// };
-
+/**
+ * The props expected for the Login screen.
+ */
 type LoginProps = NativeStackScreenProps<
   RootStackParamList,
   "Login" //todo: figure out a way to use RootScreens.LOGIN_SCREEN
 >;
 
+/**
+ * The Login screen which allows a user to enter their email and password to login with their account.
+ * @param props the props expected for the login screen
+ * @returns the rendered login screen
+ */
 const LoginScreen = (props: LoginProps) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -29,7 +32,7 @@ const LoginScreen = (props: LoginProps) => {
         // Signed in successfully
         console.log("Signed in sucessfully");
       })
-      .catch((error) => {
+      .catch((error: any) => {
         // Failed to sign in
         console.log(error.message);
       });
@@ -76,6 +79,7 @@ const LoginScreen = (props: LoginProps) => {
   );
 };
 
+// The login screen styling
 const styles = StyleSheet.create({
   container: {
     display: "flex",

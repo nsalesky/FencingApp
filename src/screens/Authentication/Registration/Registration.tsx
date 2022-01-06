@@ -8,11 +8,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackParamList } from "../../../constants/screenNames/Root";
 
+/**
+ * The props expected for the registration screen.
+ */
 type RegistrationProps = NativeStackScreenProps<
   RootStackParamList,
   "Register" //todo: figure out a way to use RootScreens.WELCOME_SCREEN
 >;
 
+/**
+ * The registration screen which allows users to enter their user information and then
+ * proceed to create an account.
+ * @param props the props expected to register
+ * @returns the rendered registration screen
+ */
 const RegistrationScreen = (props: RegistrationProps) => {
   const [fullName, setFullName] = React.useState("");
   const [displayName, setDisplayName] = React.useState("");
@@ -79,6 +88,7 @@ const RegistrationScreen = (props: RegistrationProps) => {
   );
 };
 
+// Registration screen styling
 const styles = StyleSheet.create({
   container: {
     display: "flex",
