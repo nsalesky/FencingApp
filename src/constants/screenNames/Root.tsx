@@ -5,6 +5,8 @@ const RootScreens = {
   ACCOUNT_CREATION: "AccountCreation",
 
   LOGIN: "Login",
+
+  HOME: "Home",
 };
 
 type RootStackParamList = {
@@ -15,6 +17,7 @@ type RootStackParamList = {
     prefName: string;
   };
   Login: undefined;
+  Home: undefined;
 };
 
 export { RootScreens, RootStackParamList };

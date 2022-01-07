@@ -1,11 +1,13 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { Text, Input, Button } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../constants/screenNames/Root";
+import context from "../../../context/context";
+import { getLoginInfo, logInUser } from "../../../auth";
 
 /**
  * The props expected for the Login screen.
@@ -23,18 +25,22 @@ type LoginProps = NativeStackScreenProps<
 const LoginScreen = (props: LoginProps) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const globalState = React.useContext(context);
 
   const login = () => {
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in successfully
-        console.log("Signed in sucessfully");
+      .then(async (userCredential) => {
+        globalState.setEmail(email);
+
+        // Generate a new token and store it for later
+        await logInUser(email);
+
+        props.navigation.navigate("Home");
       })
       .catch((error: any) => {
-        // Failed to sign in
-        console.log(error.message);
+        Alert.alert(`Error logging in: ${error}`);
       });
   };
 

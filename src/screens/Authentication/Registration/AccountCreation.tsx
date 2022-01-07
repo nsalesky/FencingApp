@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Input, Text, Button } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Alert, StyleSheet, View } from "react-native";
@@ -7,7 +7,8 @@ import { RootStackParamList } from "../../../constants/screenNames/Root";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import context from "../../../context/context";
-import { gql } from "@apollo/client";
+import { ApolloError, gql, useLazyQuery, useMutation } from "@apollo/client";
+import { logInUser } from "../../../auth";
 
 /**
  * The props expected for the account creation screen.
@@ -52,8 +53,10 @@ const containsNumber = (text: string): boolean => {
 };
 
 const CREATE_USER = gql`
-  mutation CreateUser(user: {
-    createUser
+  mutation CreateUser($user: NewUser!) {
+    createUser(user: $user) {
+      email
+    }
   }
 `;
 
@@ -67,11 +70,19 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
   const [password, setPassword] = React.useState("");
   const globalState = React.useContext(context);
 
+  /**
+   * Does the email fulfill all necessary conditions to be considered valid?
+   * @returns whether or not `email` is valid
+   */
   const isEmailValid = (): boolean => {
     let re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
 
+  /**
+   * Does the password fulfill all necessary conditions to be considered valid?
+   * @returns whether or not `password` is valid
+   */
   const isPasswordValid = (): boolean => {
     // Make sure password has at least 8 characters
     if (password.length < 8) {
@@ -82,6 +93,29 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
     return containsSpecialCharacter(password) && containsNumber(password);
   };
 
+  const [createUser] = useMutation(CREATE_USER, {
+    variables: {
+      user: {
+        email,
+        fullName: props.route.params.fullName,
+        prefName: props.route.params.prefName,
+      },
+    },
+    onCompleted: async (_data: any) => {
+      // Set the global email context
+      globalState.setEmail(email);
+
+      // Generate a new token and store it for later
+      logInUser(email);
+
+      // Redirect to home page
+      props.navigation.navigate("Home");
+    },
+    onError: (error: ApolloError) => {
+      Alert.alert(error.message);
+    },
+  });
+
   /**
    * Creates the user's login account on Firebase and redirects the user to the home screen if successful.
    */
@@ -90,12 +124,7 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log("Created account successfully");
-
-        // Set the global email context
-        globalState.setEmail(email);
-
-        // TODO: create user account with the fullName and displayName provided in the backend
+        createUser();
       })
       .catch((error: any) => {
         Alert.alert("Error creating account: " + error.message);

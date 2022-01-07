@@ -10,12 +10,53 @@ import LoginScreen from "./src/screens/Authentication/Login/Login";
 import RegistrationScreen from "./src/screens/Authentication/Registration/Registration";
 import initializeFirebase from "./src/firebase/firebase";
 import AccountCreationScreen from "./src/screens/Authentication/Registration/AccountCreation";
+import HomeScreen from "./src/screens/Home";
 import GlobalState from "./src/context/GlobalState";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+
+import { BACKEND_SERVER_URI } from "@env";
+import { getLoginInfo } from "./src/auth";
 
 const Stack = createNativeStackNavigator();
 
 // Basic initializations
 initializeFirebase();
+
+// todo: clean this mess up
+const httpLink = createHttpLink({
+  uri: BACKEND_SERVER_URI,
+});
+const authLink = setContext(async (_, { headers }) => {
+  // const loginInfo = await getLoginInfo();
+
+  // return {
+  //   headers: {
+  //     ...headers,
+  //     authorization: loginInfo ? loginInfo.token : "",
+  //   },
+  // };
+
+  return getLoginInfo().then((loginInfo) => {
+    return {
+      headers: {
+        ...headers,
+        authorization: loginInfo ? loginInfo.token : "",
+      },
+    };
+  });
+});
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  // uri: BACKEND_SERVER_URI,
+  link: authLink.concat(httpLink),
+});
 
 /**
  * The overall app.
@@ -24,33 +65,37 @@ initializeFirebase();
 export default function App() {
   return (
     <GlobalState>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName={RootScreens.WELCOME}
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen
-              name={RootScreens.WELCOME}
-              component={WelcomeScreen}
-            />
+      <ApolloProvider client={client}>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName={RootScreens.WELCOME}
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <Stack.Screen
+                name={RootScreens.WELCOME}
+                component={WelcomeScreen}
+              />
 
-            <Stack.Screen name={RootScreens.LOGIN} component={LoginScreen} />
+              <Stack.Screen name={RootScreens.LOGIN} component={LoginScreen} />
 
-            <Stack.Screen
-              name={RootScreens.REGISTER}
-              component={RegistrationScreen}
-            />
+              <Stack.Screen
+                name={RootScreens.REGISTER}
+                component={RegistrationScreen}
+              />
 
-            <Stack.Screen
-              name={RootScreens.ACCOUNT_CREATION}
-              component={AccountCreationScreen}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
+              <Stack.Screen
+                name={RootScreens.ACCOUNT_CREATION}
+                component={AccountCreationScreen}
+              />
+
+              <Stack.Screen name={RootScreens.HOME} component={HomeScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </ApolloProvider>
     </GlobalState>
   );
 }
