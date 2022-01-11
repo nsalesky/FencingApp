@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { getLoginInfo } from "../auth";
 import { RootStackParamList, RootScreens } from "../constants/screenNames/Root";
 import context from "../context/context";
+import { globalTheme } from "../globalTheme";
 
 /**
  * The props expected for the welcome screen.
@@ -35,13 +36,13 @@ const WelcomeScreen = (props: WelcomeProps) => {
         globalState.setEmail(possibleLoginInfo.email);
 
         // Now, we're already logged in so we can go directly to the Home screen
-        props.navigation.navigate("Home");
+        props.navigation.navigate("MainTabFlow");
       }
     });
   }, []);
 
   return (
-    <SafeAreaView style={styles.containerStyle}>
+    <SafeAreaView style={globalTheme.centerContainer}>
       <Text h4 style={styles.titleText}>
         Welcome to Fencing
       </Text>
@@ -71,12 +72,6 @@ const WelcomeScreen = (props: WelcomeProps) => {
 
 // The welcome screen style
 const styles = StyleSheet.create({
-  containerStyle: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-
   titleText: {
     marginTop: "70%",
   },

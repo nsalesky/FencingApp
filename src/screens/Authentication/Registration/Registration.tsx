@@ -35,7 +35,7 @@ const RegistrationScreen = (props: RegistrationProps) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={globalTheme.centerContainer}>
       <Text h4 h4Style={styles.title}>
         Registration
       </Text>
@@ -97,12 +97,6 @@ const RegistrationScreen = (props: RegistrationProps) => {
 
 // Registration screen styling
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-
   title: {
     marginTop: "50%",
     marginBottom: 30,

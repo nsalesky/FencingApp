@@ -110,7 +110,7 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
       logInUser(email);
 
       // Redirect to home page
-      props.navigation.navigate("Home");
+      props.navigation.navigate("MainTabFlow");
     },
     onError: (error: ApolloError) => {
       Alert.alert(error.message);
@@ -133,7 +133,7 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={globalTheme.centerContainer}>
       <Text h4 h4Style={styles.title}>
         Create an Account
       </Text>
@@ -201,12 +201,6 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
 
 // The account creation style
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-
   title: {
     marginTop: "50%",
     marginBottom: 30,

@@ -39,7 +39,7 @@ const LoginScreen = (props: LoginProps) => {
         // Generate a new token and store it for later
         await logInUser(email);
 
-        props.navigation.navigate("Home");
+        props.navigation.navigate("MainTabFlow");
       })
       .catch((error: any) => {
         Alert.alert(`Error logging in: ${error}`);
@@ -47,7 +47,7 @@ const LoginScreen = (props: LoginProps) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={globalTheme.centerContainer}>
       <Text h4 h4Style={styles.title}>
         Login
       </Text>
@@ -92,12 +92,6 @@ const LoginScreen = (props: LoginProps) => {
 
 // The login screen styling
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-
   title: {
     marginTop: "50%",
     marginBottom: 30,

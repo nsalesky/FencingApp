@@ -10,10 +10,11 @@ import LoginScreen from "./src/screens/Authentication/Login/Login";
 import RegistrationScreen from "./src/screens/Authentication/Registration/Registration";
 import initializeFirebase from "./src/firebase/firebase";
 import AccountCreationScreen from "./src/screens/Authentication/Registration/AccountCreation";
-import HomeScreen from "./src/screens/Home";
+import HomeScreen from "./src/screens/MainTabFlow/Dashboard";
 import GlobalState from "./src/context/GlobalState";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./src/client";
+import MainTabFlow from "./src/screens/MainTabFlow/MainTab";
 
 const Stack = createNativeStackNavigator();
 
@@ -53,7 +54,10 @@ export default function App() {
                 component={AccountCreationScreen}
               />
 
-              <Stack.Screen name={RootScreens.HOME} component={HomeScreen} />
+              <Stack.Screen
+                name={RootScreens.MAIN_TAB_FLOW}
+                component={MainTabFlow}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>

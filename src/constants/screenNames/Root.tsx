@@ -6,9 +6,12 @@ const RootScreens = {
 
   LOGIN: "Login",
 
-  HOME: "Home",
+  MAIN_TAB_FLOW: "MainTabFlow",
 };
 
+/**
+ * The route parameters expected for each of the root stack screens.
+ */
 type RootStackParamList = {
   Welcome: undefined;
   Register: undefined;
@@ -17,7 +20,7 @@ type RootStackParamList = {
     prefName: string;
   };
   Login: undefined;
-  Home: undefined;
+  MainTabFlow: undefined;
 };
 
 export { RootScreens, RootStackParamList };
