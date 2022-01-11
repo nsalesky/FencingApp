@@ -12,6 +12,7 @@ export const globalTheme = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    height: "100%",
   },
 
   /**

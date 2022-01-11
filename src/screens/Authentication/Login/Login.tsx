@@ -70,22 +70,16 @@ const LoginScreen = (props: LoginProps) => {
         containerStyle={styles.inputContainer}
       />
 
-      {email.length > 0 && password.length > 0 ? (
-        <Button
-          title="Next"
-          containerStyle={{ ...globalTheme.wideButton, ...globalTheme.ready }}
-          onPress={login}
-        />
-      ) : (
-        <Button
-          title="Next"
-          containerStyle={{
-            ...globalTheme.wideButton,
-            ...globalTheme.notReady,
-          }}
-          disabled
-        />
-      )}
+      <Button
+        title="Next"
+        disabled={email.length === 0 && password.length === 0}
+        onPress={login}
+        containerStyle={
+          email.length > 0 && password.length > 0
+            ? { ...globalTheme.wideButton, ...globalTheme.ready }
+            : { ...globalTheme.wideButton, ...globalTheme.notReady }
+        }
+      />
     </SafeAreaView>
   );
 };

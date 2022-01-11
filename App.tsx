@@ -5,7 +5,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import WelcomeScreen from "./src/screens/Welcome";
-import { RootScreens } from "./src/constants/screenNames/Root";
+import { RootStackParamList } from "./src/constants/screenNames/Root";
 import LoginScreen from "./src/screens/Authentication/Login/Login";
 import RegistrationScreen from "./src/screens/Authentication/Registration/Registration";
 import initializeFirebase from "./src/firebase/firebase";
@@ -16,7 +16,7 @@ import { ApolloProvider } from "@apollo/client";
 import { client } from "./src/client";
 import MainTabFlow from "./src/screens/MainTabFlow/MainTab";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // Basic initializations
 initializeFirebase();
@@ -32,32 +32,23 @@ export default function App() {
         <SafeAreaProvider>
           <NavigationContainer>
             <Stack.Navigator
-              initialRouteName={RootScreens.WELCOME}
+              initialRouteName="Welcome"
               screenOptions={{
                 headerShown: false,
               }}
             >
-              <Stack.Screen
-                name={RootScreens.WELCOME}
-                component={WelcomeScreen}
-              />
+              <Stack.Screen name="Welcome" component={WelcomeScreen} />
 
-              <Stack.Screen name={RootScreens.LOGIN} component={LoginScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
 
-              <Stack.Screen
-                name={RootScreens.REGISTER}
-                component={RegistrationScreen}
-              />
+              <Stack.Screen name="Register" component={RegistrationScreen} />
 
               <Stack.Screen
-                name={RootScreens.ACCOUNT_CREATION}
+                name="AccountCreation"
                 component={AccountCreationScreen}
               />
 
-              <Stack.Screen
-                name={RootScreens.MAIN_TAB_FLOW}
-                component={MainTabFlow}
-              />
+              <Stack.Screen name="MainTabFlow" component={MainTabFlow} />
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>

@@ -174,27 +174,24 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
         </Text>
       </View>
 
-      {isPasswordValid() ? (
-        <Button
-          title="Next"
-          containerStyle={{
-            ...globalTheme.wideButton,
-            ...globalTheme.ready,
-            ...styles.nextButton,
-          }}
-          onPress={next}
-        />
-      ) : (
-        <Button
-          title="Next"
-          containerStyle={{
-            ...globalTheme.wideButton,
-            ...globalTheme.notReady,
-            ...styles.nextButton,
-          }}
-          disabled
-        />
-      )}
+      <Button
+        title="Next"
+        disabled={!isPasswordValid()}
+        onPress={next}
+        containerStyle={
+          isPasswordValid()
+            ? {
+                ...globalTheme.wideButton,
+                ...globalTheme.ready,
+                ...styles.nextButton,
+              }
+            : {
+                ...globalTheme.wideButton,
+                ...globalTheme.notReady,
+                ...styles.nextButton,
+              }
+        }
+      />
     </SafeAreaView>
   );
 };

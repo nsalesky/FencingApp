@@ -26,18 +26,13 @@ export default function MainTabFlow() {
       initialRouteName="Dashboard"
       screenOptions={{
         headerShown: false,
+        tabBarActiveBackgroundColor: "#bdbdbd",
+        tabBarLabelStyle: {
+          color: "black",
+          fontSize: 12,
+        },
       }}
     >
-      <Tab.Screen
-        name="Dashboard"
-        component={DashboardScreen}
-        options={{
-          tabBarLabel: "Dashboard",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Icon name="home" size={size} color="black" />
-          ),
-        }}
-      />
       <Tab.Screen
         name="BrowseTournaments"
         component={BrowseTournaments}
@@ -48,6 +43,18 @@ export default function MainTabFlow() {
           ),
         }}
       />
+
+      <Tab.Screen
+        name="Dashboard"
+        component={DashboardScreen}
+        options={{
+          tabBarLabel: "Dashboard",
+          tabBarIcon: ({ focused, color, size }) => (
+            <Icon name="home" size={size} color="black" />
+          ),
+        }}
+      />
+
       <Tab.Screen
         name="Profile"
         component={Profile}

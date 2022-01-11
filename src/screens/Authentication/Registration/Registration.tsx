@@ -70,27 +70,24 @@ const RegistrationScreen = (props: RegistrationProps) => {
         )
       </Text>
 
-      {fullName.length > 0 && prefName.length > 0 ? (
-        <Button
-          title="Next"
-          containerStyle={{
-            ...globalTheme.wideButton,
-            ...globalTheme.ready,
-            ...styles.nextButton,
-          }}
-          onPress={next}
-        />
-      ) : (
-        <Button
-          title="Next"
-          containerStyle={{
-            ...globalTheme.wideButton,
-            ...globalTheme.notReady,
-            ...styles.nextButton,
-          }}
-          disabled
-        />
-      )}
+      <Button
+        title="Next"
+        disabled={fullName.length === 0 && prefName.length === 0}
+        onPress={next}
+        containerStyle={
+          fullName.length > 0 && prefName.length > 0
+            ? {
+                ...globalTheme.wideButton,
+                ...globalTheme.ready,
+                ...styles.nextButton,
+              }
+            : {
+                ...globalTheme.wideButton,
+                ...globalTheme.notReady,
+                ...styles.nextButton,
+              }
+        }
+      />
     </SafeAreaView>
   );
 };

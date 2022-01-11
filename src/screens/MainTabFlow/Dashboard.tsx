@@ -1,14 +1,15 @@
 import { gql, useQuery } from "@apollo/client";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { RootStackParamList } from "../../constants/screenNames/Root";
 import context from "../../context/context";
-import { StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { globalTheme } from "../../globalTheme";
 import { MainTabParamList } from "./MainTab";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Text } from "react-native-elements";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
-type DashboardProps = NativeStackScreenProps<MainTabParamList, "Dashboard">;
+type DashboardProps = BottomTabScreenProps<MainTabParamList, "Dashboard">;
 
 const GET_USER = gql`
   query {
@@ -29,7 +30,7 @@ interface UserData {
  * @param props the screen props
  * @returns the rendered dashboard screen
  */
-export default function Dashboard(props: DashboardProps) {
+export default function Dashboard({ route, navigation }: DashboardProps) {
   const globalState = React.useContext(context);
 
   const { loading, error, data } = useQuery<UserData>(GET_USER);
@@ -39,9 +40,32 @@ export default function Dashboard(props: DashboardProps) {
 
   return (
     <SafeAreaView style={globalTheme.centerContainer}>
-      <Text>{data ? data.currentUser.prefName : "Data is null"}</Text>
+      <Text h1>Hi {data?.currentUser.prefName}</Text>
+
+      {/* Upcoming tournaments */}
+      <View style={styles.upcomingContainer}>
+        <Text h4 h4Style={styles.upcomingLabel}>
+          Upcoming tournaments you've registered for...
+        </Text>
+
+        <ScrollView style={styles.upcomingScroll}></ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  upcomingContainer: {
+    width: "80%",
+    height: "60%",
+    marginTop: 20,
+  },
+
+  upcomingLabel: {
+    textAlign: "center",
+  },
+
+  upcomingScroll: {
+    backgroundColor: "#dedede",
+  },
+});
