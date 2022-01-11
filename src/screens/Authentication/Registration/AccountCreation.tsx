@@ -9,6 +9,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import context from "../../../context/context";
 import { ApolloError, gql, useLazyQuery, useMutation } from "@apollo/client";
 import { logInUser } from "../../../auth";
+import { globalTheme } from "../../../globalTheme";
 
 /**
  * The props expected for the account creation screen.
@@ -176,13 +177,21 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
       {isPasswordValid() ? (
         <Button
           title="Next"
-          containerStyle={{ ...styles.button, ...styles.readyButton }}
+          containerStyle={{
+            ...globalTheme.wideButton,
+            ...globalTheme.ready,
+            ...styles.nextButton,
+          }}
           onPress={next}
         />
       ) : (
         <Button
           title="Next"
-          containerStyle={{ ...styles.button, ...styles.notReadyButton }}
+          containerStyle={{
+            ...globalTheme.wideButton,
+            ...globalTheme.notReady,
+            ...styles.nextButton,
+          }}
           disabled
         />
       )}
@@ -215,18 +224,7 @@ const styles = StyleSheet.create({
 
   passwordCheck: {},
 
-  button: {
-    width: "50%",
-    borderRadius: 20,
-  },
-
-  readyButton: {
-    backgroundColor: "#363535",
-    marginTop: 20,
-  },
-
-  notReadyButton: {
-    backgroundColor: "#737070",
+  nextButton: {
     marginTop: 20,
   },
 });

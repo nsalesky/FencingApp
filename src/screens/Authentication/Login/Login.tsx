@@ -8,6 +8,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../constants/screenNames/Root";
 import context from "../../../context/context";
 import { getLoginInfo, logInUser } from "../../../auth";
+import { globalTheme } from "../../../globalTheme";
 
 /**
  * The props expected for the Login screen.
@@ -30,6 +31,7 @@ const LoginScreen = (props: LoginProps) => {
   const login = () => {
     const auth = getAuth();
 
+    // Attempt to sign in
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         globalState.setEmail(email);
@@ -71,13 +73,16 @@ const LoginScreen = (props: LoginProps) => {
       {email.length > 0 && password.length > 0 ? (
         <Button
           title="Next"
-          containerStyle={{ ...styles.button, ...styles.readyButton }}
+          containerStyle={{ ...globalTheme.wideButton, ...globalTheme.ready }}
           onPress={login}
         />
       ) : (
         <Button
           title="Next"
-          containerStyle={{ ...styles.button, ...styles.notReadyButton }}
+          containerStyle={{
+            ...globalTheme.wideButton,
+            ...globalTheme.notReady,
+          }}
           disabled
         />
       )}
@@ -100,19 +105,6 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     marginTop: 10,
-  },
-
-  button: {
-    width: "50%",
-    borderRadius: 20,
-  },
-
-  readyButton: {
-    backgroundColor: "#363535",
-  },
-
-  notReadyButton: {
-    backgroundColor: "#737070",
   },
 });
 

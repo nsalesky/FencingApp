@@ -6,7 +6,9 @@ import { Button } from "react-native-elements/dist/buttons/Button";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Icon from "react-native-vector-icons/FontAwesome";
+import { getLoginInfo } from "../auth";
 import { RootStackParamList, RootScreens } from "../constants/screenNames/Root";
+import context from "../context/context";
 
 /**
  * The props expected for the welcome screen.
@@ -22,6 +24,22 @@ type WelcomeProps = NativeStackScreenProps<
  * @returns the rendered welcome screen.
  */
 const WelcomeScreen = (props: WelcomeProps) => {
+  const globalState = React.useContext(context);
+
+  // We need to check if we're already logged in through local storage and set the context
+  // state accordingly if so
+  React.useEffect(() => {
+    getLoginInfo().then((possibleLoginInfo) => {
+      if (possibleLoginInfo) {
+        // We are already logged in, so set the global email state
+        globalState.setEmail(possibleLoginInfo.email);
+
+        // Now, we're already logged in so we can go directly to the Home screen
+        props.navigation.navigate("Home");
+      }
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.containerStyle}>
       <Text h4 style={styles.titleText}>

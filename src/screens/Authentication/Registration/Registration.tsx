@@ -7,6 +7,7 @@ import { Input } from "react-native-elements/dist/input/Input";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackParamList } from "../../../constants/screenNames/Root";
+import { globalTheme } from "../../../globalTheme";
 
 /**
  * The props expected for the registration screen.
@@ -72,13 +73,21 @@ const RegistrationScreen = (props: RegistrationProps) => {
       {fullName.length > 0 && prefName.length > 0 ? (
         <Button
           title="Next"
-          containerStyle={{ ...styles.button, ...styles.readyButton }}
+          containerStyle={{
+            ...globalTheme.wideButton,
+            ...globalTheme.ready,
+            ...styles.nextButton,
+          }}
           onPress={next}
         />
       ) : (
         <Button
           title="Next"
-          containerStyle={{ ...styles.button, ...styles.notReadyButton }}
+          containerStyle={{
+            ...globalTheme.wideButton,
+            ...globalTheme.notReady,
+            ...styles.nextButton,
+          }}
           disabled
         />
       )}
@@ -108,18 +117,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
-  button: {
-    width: "50%",
-    borderRadius: 20,
-  },
-
-  readyButton: {
-    backgroundColor: "#363535",
-    marginTop: 20,
-  },
-
-  notReadyButton: {
-    backgroundColor: "#737070",
+  nextButton: {
     marginTop: 20,
   },
 });
