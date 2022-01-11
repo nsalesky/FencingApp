@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { globalTheme } from "../../globalTheme";
 import { MainTabParamList } from "./MainTab";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Text } from "react-native-elements";
+import { Button, Text } from "react-native-elements";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
 type DashboardProps = BottomTabScreenProps<MainTabParamList, "Dashboard">;
@@ -40,32 +40,64 @@ export default function Dashboard({ route, navigation }: DashboardProps) {
 
   return (
     <SafeAreaView style={globalTheme.centerContainer}>
-      <Text h1>Hi {data?.currentUser.prefName}</Text>
+      <View style={styles.container}>
+        <Text h1>Hi {data?.currentUser.prefName}</Text>
 
-      {/* Upcoming tournaments */}
-      <View style={styles.upcomingContainer}>
-        <Text h4 h4Style={styles.upcomingLabel}>
+        <Text h4 h4Style={{ ...styles.centerLabel, ...styles.upcomingLabel }}>
           Upcoming tournaments you've registered for...
         </Text>
 
         <ScrollView style={styles.upcomingScroll}></ScrollView>
+
+        <Text h4 h4Style={{ ...styles.centerLabel, ...styles.managingLabel }}>
+          Tournaments you're managing...
+        </Text>
+
+        <ScrollView style={styles.managingScroll}></ScrollView>
+
+        <Button
+          title="Create a new tournament"
+          containerStyle={{ ...globalTheme.wideButton, ...styles.createButton }}
+        />
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  upcomingContainer: {
-    width: "80%",
-    height: "60%",
-    marginTop: 20,
+  container: {
+    width: "90%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+
+  centerLabel: {
+    textAlign: "center",
   },
 
   upcomingLabel: {
-    textAlign: "center",
+    marginTop: 20,
   },
 
   upcomingScroll: {
     backgroundColor: "#dedede",
+    width: "100%",
+    height: "40%",
+  },
+
+  managingLabel: {
+    marginTop: 10,
+  },
+
+  managingScroll: {
+    backgroundColor: "#dedede",
+    width: "100%",
+    height: "25%",
+  },
+
+  createButton: {
+    width: "80%",
+    marginTop: 10,
   },
 });
