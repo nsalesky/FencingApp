@@ -12,51 +12,13 @@ import initializeFirebase from "./src/firebase/firebase";
 import AccountCreationScreen from "./src/screens/Authentication/Registration/AccountCreation";
 import HomeScreen from "./src/screens/Home";
 import GlobalState from "./src/context/GlobalState";
-import {
-  ApolloClient,
-  ApolloProvider,
-  createHttpLink,
-  InMemoryCache,
-} from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
-
-import { BACKEND_SERVER_URI } from "@env";
-import { getLoginInfo } from "./src/auth";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./src/client";
 
 const Stack = createNativeStackNavigator();
 
 // Basic initializations
 initializeFirebase();
-
-// todo: clean this mess up
-const httpLink = createHttpLink({
-  uri: BACKEND_SERVER_URI,
-});
-const authLink = setContext(async (_, { headers }) => {
-  // const loginInfo = await getLoginInfo();
-
-  // return {
-  //   headers: {
-  //     ...headers,
-  //     authorization: loginInfo ? loginInfo.token : "",
-  //   },
-  // };
-
-  return getLoginInfo().then((loginInfo) => {
-    return {
-      headers: {
-        ...headers,
-        authorization: loginInfo ? loginInfo.token : "",
-      },
-    };
-  });
-});
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  // uri: BACKEND_SERVER_URI,
-  link: authLink.concat(httpLink),
-});
 
 /**
  * The overall app.
