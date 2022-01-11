@@ -8,30 +8,57 @@ import WelcomeScreen from "./src/screens/Welcome";
 import { RootScreens } from "./src/constants/screenNames/Root";
 import LoginScreen from "./src/screens/Authentication/Login/Login";
 import RegistrationScreen from "./src/screens/Authentication/Registration/Registration";
+import initializeFirebase from "./src/firebase/firebase";
+import AccountCreationScreen from "./src/screens/Authentication/Registration/AccountCreation";
+import HomeScreen from "./src/screens/Home";
+import GlobalState from "./src/context/GlobalState";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./src/client";
 
 const Stack = createNativeStackNavigator();
 
+// Basic initializations
+initializeFirebase();
+
+/**
+ * The overall app.
+ * @returns the rendered app
+ */
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={RootScreens.WELCOME}
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name={RootScreens.WELCOME} component={WelcomeScreen} />
+    <GlobalState>
+      <ApolloProvider client={client}>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName={RootScreens.WELCOME}
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <Stack.Screen
+                name={RootScreens.WELCOME}
+                component={WelcomeScreen}
+              />
 
-          <Stack.Screen name={RootScreens.LOGIN} component={LoginScreen} />
+              <Stack.Screen name={RootScreens.LOGIN} component={LoginScreen} />
 
-          <Stack.Screen
-            name={RootScreens.REGISTER}
-            component={RegistrationScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+              <Stack.Screen
+                name={RootScreens.REGISTER}
+                component={RegistrationScreen}
+              />
+
+              <Stack.Screen
+                name={RootScreens.ACCOUNT_CREATION}
+                component={AccountCreationScreen}
+              />
+
+              <Stack.Screen name={RootScreens.HOME} component={HomeScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </ApolloProvider>
+    </GlobalState>
   );
 }
 
