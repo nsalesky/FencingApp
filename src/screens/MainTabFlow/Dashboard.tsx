@@ -59,6 +59,16 @@ interface UserData {
 }
 
 /**
+ * The data for a single tournament.
+ */
+interface TournamentData {
+  id: string;
+  name: string;
+  location: string;
+  time: string;
+}
+
+/**
  * Displays the basic info for a tournament and links the user to more information when pressed.
  * @param props the basic tournament information
  * @returns the rendered tournament object
@@ -95,33 +105,42 @@ function Tournament(props: {
 export default function Dashboard({ route, navigation }: DashboardProps) {
   const globalState = React.useContext(context);
 
+  const [prefName, setPrefName] = React.useState("");
+  const [registered, setRegistered] = React.useState<TournamentData[]>([]);
+  const [managed, setManaged] = React.useState<TournamentData[]>([]);
+
   const { loading, error, data } = useQuery<UserData>(GET_USER);
+
+  React.useEffect(() => {
+    if (data) {
+      setPrefName(data.currentUser.prefName);
+      setRegistered(data.currentUser.managedTournaments);
+      setManaged(data.currentUser.managedTournaments);
+    }
+  });
 
   if (loading) return <Text>Loading</Text>;
   if (error) return <Text>Error: {error.message}</Text>;
-  if (!data) return <Text>Null data</Text>;
 
   return (
     <SafeAreaView style={globalTheme.centerContainer}>
       <View style={styles.container}>
-        <Text h1>Hi {data.currentUser.prefName}</Text>
+        <Text h1>Hi {prefName}</Text>
 
         <Text h4 h4Style={{ ...styles.centerLabel, ...styles.upcomingLabel }}>
           Upcoming tournaments you're registered for...
         </Text>
 
         <ScrollView style={styles.upcomingScroll}>
-          {data.currentUser.registeredTournaments.map(
-            ({ id, name, location, time }) => (
-              <Tournament
-                key={id}
-                id={id}
-                name={name}
-                location={location}
-                time={time}
-              />
-            )
-          )}
+          {registered.map(({ id, name, location, time }) => (
+            <Tournament
+              key={id}
+              id={id}
+              name={name}
+              location={location}
+              time={time}
+            />
+          ))}
         </ScrollView>
 
         <Text h4 h4Style={{ ...styles.centerLabel, ...styles.managingLabel }}>
@@ -129,17 +148,15 @@ export default function Dashboard({ route, navigation }: DashboardProps) {
         </Text>
 
         <ScrollView style={styles.managingScroll}>
-          {data.currentUser.managedTournaments.map(
-            ({ id, name, location, time }) => (
-              <Tournament
-                key={id}
-                id={id}
-                name={name}
-                location={location}
-                time={time}
-              />
-            )
-          )}
+          {managed.map(({ id, name, location, time }) => (
+            <Tournament
+              key={id}
+              id={id}
+              name={name}
+              location={location}
+              time={time}
+            />
+          ))}
         </ScrollView>
 
         <Button
