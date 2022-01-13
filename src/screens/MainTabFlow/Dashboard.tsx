@@ -58,6 +58,11 @@ interface UserData {
   };
 }
 
+/**
+ * Displays the basic info for a tournament and links the user to more information when pressed.
+ * @param props the basic tournament information
+ * @returns the rendered tournament object
+ */
 function Tournament(props: {
   id: string;
   name: string;
