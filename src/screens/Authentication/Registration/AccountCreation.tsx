@@ -54,8 +54,8 @@ const containsNumber = (text: string): boolean => {
 };
 
 const CREATE_USER = gql`
-  mutation CreateUser($user: NewUser!) {
-    createUser(user: $user) {
+  mutation CreateUser($email: String!, $fullName: String!, $prefName: String!) {
+    createUser(email: $email, fullName: $fullName, prefName: $prefName) {
       email
     }
   }
@@ -96,11 +96,9 @@ const AccountCreationScreen = (props: AccountCreationProps) => {
 
   const [createUser] = useMutation(CREATE_USER, {
     variables: {
-      user: {
-        email,
-        fullName: props.route.params.fullName,
-        prefName: props.route.params.prefName,
-      },
+      email,
+      fullName: props.route.params.fullName,
+      prefName: props.route.params.prefName,
     },
     onCompleted: async (_data: any) => {
       // Set the global email context
